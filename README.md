@@ -1,4 +1,4 @@
-#First day
+#First day <br />
 I tried to make a docker-compose.yml which is supposed to create my 3 services:
 - web (front-end)
 - api (cSharp API)
