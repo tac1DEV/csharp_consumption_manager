@@ -1,3 +1,4 @@
+using Consommation.API.Services;
 using Consommation.Database;
 using Consommation.Database.Managers;
 using Consommation.Domain.Business;
@@ -14,7 +15,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var connectionString = builder.Configuration.GetConnectionString("AppDbConnectionString");
+// var connectionString = builder.Configuration.GetConnectionString("AppDbConnectionString");
+var server = builder.Configuration["server"] ?? "localhost";
+var database = builder.Configuration["database"] ?? "ConsommationDB";
+var port = builder.Configuration["port"] ?? "1433";
+var pass = builder.Configuration["password"] ?? "Youtube2024";
+var user = builder.Configuration["dbuser"] ?? "SA";
+
+var connectionString = $"Server={server}, {port};Initial Catalog={database}; User ID={user};Password={pass};TrustedServerCertificate=true";
+
 builder.Services.AddDbContext<DatabaseContext>(
     options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
@@ -29,12 +38,14 @@ builder.Services.AddScoped<IRechargeBusiness, RechargeBusiness>();
 
 var app = builder.Build();
 
+DatabaseManagementService.MigrationInitialisation(app);
+
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+// if (app.Environment.IsDevelopment())
+// {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+// }
 
 app.UseHttpsRedirection();
 
