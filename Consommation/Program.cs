@@ -19,7 +19,7 @@ builder.Services.AddSwaggerGen();
 var server = builder.Configuration["server"] ?? "localhost";
 var database = builder.Configuration["database"] ?? "Products";
 var port = builder.Configuration["port"] ?? "3306";
-var pass = builder.Configuration["password"] ?? "sy4pen9r";
+var pass = builder.Configuration["password"] ?? "password";
 var user = builder.Configuration["dbuser"] ?? "root";
 
 // var connectionString = $"Server={server}, {port};Initial Catalog={database}; User ID={user};Password={pass};TrustedServerCertificate=true";
