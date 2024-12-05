@@ -17,12 +17,13 @@ builder.Services.AddSwaggerGen();
 
 // var connectionString = builder.Configuration.GetConnectionString("AppDbConnectionString");
 var server = builder.Configuration["server"] ?? "localhost";
-var database = builder.Configuration["database"] ?? "ConsommationDB";
-var port = builder.Configuration["port"] ?? "1433";
-var pass = builder.Configuration["password"] ?? "Youtube2024";
-var user = builder.Configuration["dbuser"] ?? "SA";
+var database = builder.Configuration["database"] ?? "Products";
+var port = builder.Configuration["port"] ?? "3306";
+var pass = builder.Configuration["password"] ?? "sy4pen9r";
+var user = builder.Configuration["dbuser"] ?? "root";
 
-var connectionString = $"Server={server}, {port};Initial Catalog={database}; User ID={user};Password={pass};TrustedServerCertificate=true";
+// var connectionString = $"Server={server}, {port};Initial Catalog={database}; User ID={user};Password={pass};TrustedServerCertificate=true";
+var connectionString = $"Server={server}, {port};Initial Catalog={database}; User ID={user};Password={pass};";
 
 builder.Services.AddDbContext<DatabaseContext>(
     options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
