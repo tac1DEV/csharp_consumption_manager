@@ -1,4 +1,3 @@
-using Consommation.API.Services;
 using Consommation.Database;
 using Consommation.Database.Managers;
 using Consommation.Domain.Business;
@@ -15,16 +14,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// var connectionString = builder.Configuration.GetConnectionString("AppDbConnectionString");
-var server = builder.Configuration["server"] ?? "localhost";
-var database = builder.Configuration["database"] ?? "Products";
-var port = builder.Configuration["port"] ?? "3306";
-var pass = builder.Configuration["password"] ?? "password";
-var user = builder.Configuration["dbuser"] ?? "root";
-
-// var connectionString = $"Server={server}, {port};Initial Catalog={database}; User ID={user};Password={pass};TrustedServerCertificate=true";
-var connectionString = $"Server={server}, {port};Initial Catalog={database}; User ID={user};Password={pass};";
-
+var connectionString = builder.Configuration.GetConnectionString("AppDbConnectionString");
 builder.Services.AddDbContext<DatabaseContext>(
     options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
@@ -39,14 +29,12 @@ builder.Services.AddScoped<IRechargeBusiness, RechargeBusiness>();
 
 var app = builder.Build();
 
-DatabaseManagementService.MigrationInitialisation(app);
-
 // Configure the HTTP request pipeline.
-// if (app.Environment.IsDevelopment())
-// {
+if (app.Environment.IsDevelopment())
+{
     app.UseSwagger();
     app.UseSwaggerUI();
-// }
+}
 
 app.UseHttpsRedirection();
 
